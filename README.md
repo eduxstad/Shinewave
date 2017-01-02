@@ -3,6 +3,9 @@ Shinewave is a mod for the Nintendo GameCube controller that adds USB joystick f
 
 ![Controller](/images/controller.jpg)
 
+#Fork Modifications
+This fork uses old firmware to fix an issue with the current firmware. It also adds support for all buttons and analog sticks/triggers, except for proper trigger buttons (TODO). Create a Github Issue for any questions or concerns. 
+
 # Installation & Usage
 Shinewave has been written on a Linux system and requires the full avr-gcc toolchain to make.
 

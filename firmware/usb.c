@@ -46,6 +46,10 @@ usbMsgLen_t usbFunctionSetup(uchar data[8]) {
 }
 
 void build_report(Controller *controller, report_t *report) {
+
+    //controller configuration
+
+    //buttons
     if(CONTROLLER_A(*controller))
         report->buttonMask |= (1 << 0);
     else
@@ -71,21 +75,45 @@ void build_report(Controller *controller, report_t *report) {
     else
         report->buttonMask &= ~(1 << 7);
 
+    if(CONTROLLER_Z(*controller))
+	report->buttonMask |= (1 << 11);
+    else
+	report->buttonMask &= ~(1 << 11);
+
     if(CONTROLLER_D_UP(*controller))
         report->buttonMask |= (1 << 6);
     else
         report->buttonMask &= ~(1 << 6);
-
-    if(controller->analog_l > 127)
-        report->buttonMask |= (1 << 4);
+    
+    if(CONTROLLER_D_DOWN(*controller))
+	report->buttonMask |= (1 << 8);
     else
-        report->buttonMask &= ~(1 << 4);
+	report->buttonMask &= ~(1 << 8);
+    
+    if(CONTROLLER_D_RIGHT(*controller))
+	report->buttonMask |= (1 << 9);
+    else
+	report->buttonMask &= ~(1 << 9);
+ 
+    if(CONTROLLER_D_LEFT(*controller))
+	report->buttonMask |= (1 << 10);
+    else
+	report->buttonMask &= ~(1 << 10);
 
+    //old left trigger code
+    //TODO: Implement trigger buttons (possibly based on analog location?)
+    //if(controller->analog_l > 127)
+    //    report->buttonMask |= (1 << 4);
+    //else
+    //    report->buttonMask &= ~(1 << 4);
+    //   
+
+    //analog sticks and triggers
     report->x = controller->joy_x;
     report->y = -(controller->joy_y);
     report->z = controller->analog_l;
     report->rx = controller->c_x;
-    report->ry = controller->c_y;
+    report->ry = -(controller->c_y);
     report->rz = controller->analog_r;
 }
 
